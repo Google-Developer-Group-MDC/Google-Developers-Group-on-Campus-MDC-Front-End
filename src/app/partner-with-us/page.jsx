@@ -1,4 +1,4 @@
-import { PartnerWithUs } from "../../pages/PartnerWithUs";
+import { PartnerWithUs } from "../../components/PartnerWithUs";
 
 export default function PartnerWithUsPage() {
   return <PartnerWithUs />;

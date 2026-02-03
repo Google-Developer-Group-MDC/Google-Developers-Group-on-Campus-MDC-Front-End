@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { NeonBackground } from "./NeonBackground";
 
 const PARTNERSHIP_OPTIONS = [
   "Event Sponsorship",
@@ -71,13 +72,14 @@ function PartnerWithUs() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa]" style={{ color: "#202124" }}>
+    <div className="min-h-screen relative" style={{ color: "#202124" }}>
+      <NeonBackground />
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white" style={{ borderBottom: "1px solid #dadce0" }}>
+      <nav className="sticky top-0 z-50 bg-[#202124]/80 backdrop-blur-md" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-6 h-16">
           <Link href="/" className="flex items-center">
             <img
-              src="/gdg-logo.png"
+              src="/gdg-logo-white.png"
               alt="Google Developer Groups"
               className="h-7"
             />
@@ -88,11 +90,11 @@ function PartnerWithUs() {
         </div>
       </nav>
 
-      <div className="max-w-xl mx-auto px-4 py-12">
+      <div className="relative z-10 max-w-xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-medium">Partner With Us</h1>
-          <p className="mt-2 text-sm" style={{ color: "#676c72" }}>
+          <h1 className="text-2xl font-medium text-white">Partner With Us</h1>
+          <p className="mt-2 text-sm text-white/60">
             GDG on Campus &mdash; Miami Dade College
           </p>
         </div>
@@ -317,7 +319,7 @@ function PartnerWithUs() {
           </div>
         </form>
 
-        <p className="text-center text-xs mt-6" style={{ color: "#676c72" }}>
+        <p className="text-center text-xs mt-6 text-white/40">
           Google Developer Groups on Campus &mdash; Miami Dade College
         </p>
       </div>

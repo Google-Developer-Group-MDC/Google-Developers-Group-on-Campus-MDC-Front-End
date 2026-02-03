@@ -1,4 +1,4 @@
-import { BecomeAMember } from "../../pages/BecomeAMember";
+import { BecomeAMember } from "../../components/BecomeAMember";
 
 export default function BecomeAMemberPage() {
   return <BecomeAMember />;
