@@ -26,9 +26,24 @@ const HEAR_ABOUT_OPTIONS = [
 ];
 
 const inputClass =
-  "w-full border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a73e8] focus:border-transparent transition";
-const inputStyle = { borderColor: "#dadce0", borderRadius: 4, color: "#202124" };
-const labelClass = "block text-sm font-medium mb-1";
+  "w-full border px-4 py-3 text-sm bg-white/5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#1a73e8]/60 focus:border-transparent transition";
+const inputStyle = { borderColor: "rgba(255,255,255,0.1)", borderRadius: 10, color: "#fff" };
+const labelClass = "block text-sm font-medium mb-1 text-white/80";
+
+function SectionDivider({ color, label }) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <span
+        className="inline-block w-2 h-2 rounded-full shrink-0"
+        style={{ backgroundColor: color }}
+      />
+      <span className="text-xs font-medium text-white/50 uppercase tracking-wider whitespace-nowrap">
+        {label}
+      </span>
+      <span className="flex-1 h-px" style={{ backgroundColor: "rgba(255,255,255,0.06)" }} />
+    </div>
+  );
+}
 
 function BecomeAMember() {
   const [formData, setFormData] = useState({
@@ -68,17 +83,30 @@ function BecomeAMember() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa] px-4">
-        <div className="max-w-md w-full text-center space-y-5">
-          <img
-            src="/gdg-logo.png"
-            alt="Google Developer Groups"
-            className="h-7 mx-auto"
-          />
-          <h2 className="text-2xl font-medium" style={{ color: "#202124" }}>
+      <div className="min-h-screen relative flex items-center justify-center px-4">
+        <NeonBackground />
+        <div className="relative z-10 max-w-md w-full text-center space-y-5">
+          <div
+            className="mx-auto flex items-center justify-center w-16 h-16 rounded-full"
+            style={{
+              backgroundColor: "rgba(26,115,232,0.15)",
+              boxShadow: "0 0 30px rgba(26,115,232,0.3)",
+            }}
+          >
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="#1a73e8"
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-medium text-white">
             Welcome to the community!
           </h2>
-          <p style={{ color: "#676c72" }}>
+          <p className="text-white/60">
             Thank you for signing up. We&apos;ll be in touch soon with upcoming
             events and opportunities.
           </p>
@@ -91,7 +119,7 @@ function BecomeAMember() {
   }
 
   return (
-    <div className="min-h-screen relative" style={{ color: "#202124" }}>
+    <div className="min-h-screen relative">
       <NeonBackground />
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-[#202124]/80 backdrop-blur-md" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
@@ -112,22 +140,45 @@ function BecomeAMember() {
       <div className="relative z-10 max-w-xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-medium text-white">Become a Member</h1>
+          <h1 className="text-3xl sm:text-4xl font-medium text-white">Become a Member</h1>
           <p className="mt-2 text-sm text-white/60">
             GDG on Campus &mdash; Miami Dade College
           </p>
+          {/* Google-color dots */}
+          <div className="flex justify-center gap-1.5 mt-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1a73e8]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#EA4335]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FBBC05]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F9D58]" />
+          </div>
         </div>
 
         {/* Form Card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-6 sm:p-8 space-y-6"
-          style={{ border: "1px solid #dadce0", borderRadius: 8 }}
+          className="bg-[#202124]/70 backdrop-blur-xl sm:p-10 p-6 space-y-7"
+          style={{
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 16,
+            overflow: "hidden",
+            position: "relative",
+          }}
         >
+          {/* Google 4-color gradient bar */}
+          <div
+            className="absolute top-0 left-0 right-0 h-1"
+            style={{
+              background: "linear-gradient(to right, #1a73e8 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
+            }}
+          />
+
+          {/* Section: Personal Information */}
+          <SectionDivider color="#1a73e8" label="Personal Information" />
+
           {/* Name Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="firstName" className={labelClass} style={{ color: "#202124" }}>
+              <label htmlFor="firstName" className={labelClass}>
                 First Name <span style={{ color: "#EA4335" }}>*</span>
               </label>
               <input
@@ -142,7 +193,7 @@ function BecomeAMember() {
               />
             </div>
             <div>
-              <label htmlFor="lastName" className={labelClass} style={{ color: "#202124" }}>
+              <label htmlFor="lastName" className={labelClass}>
                 Last Name <span style={{ color: "#EA4335" }}>*</span>
               </label>
               <input
@@ -160,7 +211,7 @@ function BecomeAMember() {
 
           {/* Email */}
           <div>
-            <label htmlFor="email" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="email" className={labelClass}>
               Email <span style={{ color: "#EA4335" }}>*</span>
             </label>
             <input
@@ -178,7 +229,7 @@ function BecomeAMember() {
 
           {/* Phone */}
           <div>
-            <label htmlFor="phone" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="phone" className={labelClass}>
               Phone Number
             </label>
             <input
@@ -193,9 +244,12 @@ function BecomeAMember() {
             />
           </div>
 
+          {/* Section: Academic Details */}
+          <SectionDivider color="#FBBC05" label="Academic Details" />
+
           {/* Major */}
           <div>
-            <label htmlFor="major" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="major" className={labelClass}>
               Major / Field of Study <span style={{ color: "#EA4335" }}>*</span>
             </label>
             <input
@@ -213,7 +267,7 @@ function BecomeAMember() {
 
           {/* Year */}
           <div>
-            <label htmlFor="year" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="year" className={labelClass}>
               Year <span style={{ color: "#EA4335" }}>*</span>
             </label>
             <select
@@ -222,7 +276,7 @@ function BecomeAMember() {
               required
               value={formData.year}
               onChange={handleChange}
-              className={`${inputClass} bg-white`}
+              className={`${inputClass} bg-[#2a2a2e]`}
               style={inputStyle}
             >
               <option value="" disabled>
@@ -236,9 +290,12 @@ function BecomeAMember() {
             </select>
           </div>
 
+          {/* Section: Interests */}
+          <SectionDivider color="#0F9D58" label="Interests" />
+
           {/* Tech Interests */}
           <fieldset>
-            <legend className={labelClass} style={{ color: "#202124" }}>
+            <legend className={labelClass}>
               What areas of technology interest you?
             </legend>
             <div className="flex flex-wrap gap-2 mt-1">
@@ -258,9 +315,12 @@ function BecomeAMember() {
             </div>
           </fieldset>
 
+          {/* Section: Additional */}
+          <SectionDivider color="#EA4335" label="Additional" />
+
           {/* How did you hear about us */}
           <div>
-            <label htmlFor="hearAboutUs" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="hearAboutUs" className={labelClass}>
               How did you hear about us?
             </label>
             <select
@@ -268,7 +328,7 @@ function BecomeAMember() {
               name="hearAboutUs"
               value={formData.hearAboutUs}
               onChange={handleChange}
-              className={`${inputClass} bg-white`}
+              className={`${inputClass} bg-[#2a2a2e]`}
               style={inputStyle}
             >
               <option value="" disabled>
@@ -284,7 +344,7 @@ function BecomeAMember() {
 
           {/* Additional Info */}
           <div>
-            <label htmlFor="additionalInfo" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="additionalInfo" className={labelClass}>
               Anything else you&apos;d like us to know?
             </label>
             <textarea
@@ -299,10 +359,17 @@ function BecomeAMember() {
           </div>
 
           {/* Submit */}
-          <div className="pt-1">
-            <button type="submit" className="btn btn-blue w-full">
+          <div className="pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <button
+              type="submit"
+              className="btn btn-blue w-full mt-4"
+              style={{ padding: 14, borderRadius: 12, fontWeight: 600 }}
+            >
               Join GDG on Campus &mdash; MDC
             </button>
+            <p className="text-center text-xs text-white/30 mt-3">
+              By joining, you agree to receive updates about events and opportunities.
+            </p>
           </div>
         </form>
 

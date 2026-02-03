@@ -14,9 +14,24 @@ const PARTNERSHIP_OPTIONS = [
 ];
 
 const inputClass =
-  "w-full border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F9D58] focus:border-transparent transition";
-const inputStyle = { borderColor: "#dadce0", borderRadius: 4, color: "#202124" };
-const labelClass = "block text-sm font-medium mb-1";
+  "w-full border px-4 py-3 text-sm bg-white/5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#0F9D58]/60 focus:border-transparent transition";
+const inputStyle = { borderColor: "rgba(255,255,255,0.1)", borderRadius: 10, color: "#fff" };
+const labelClass = "block text-sm font-medium mb-1 text-white/80";
+
+function SectionDivider({ color, label }) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <span
+        className="inline-block w-2 h-2 rounded-full shrink-0"
+        style={{ backgroundColor: color }}
+      />
+      <span className="text-xs font-medium text-white/50 uppercase tracking-wider whitespace-nowrap">
+        {label}
+      </span>
+      <span className="flex-1 h-px" style={{ backgroundColor: "rgba(255,255,255,0.06)" }} />
+    </div>
+  );
+}
 
 function PartnerWithUs() {
   const [formData, setFormData] = useState({
@@ -49,17 +64,30 @@ function PartnerWithUs() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa] px-4">
-        <div className="text-center space-y-5">
-          <img
-            src="/gdg-logo.png"
-            alt="Google Developer Groups"
-            className="h-7 mx-auto"
-          />
-          <h2 className="text-2xl font-medium" style={{ color: "#202124" }}>
+      <div className="min-h-screen relative flex items-center justify-center px-4">
+        <NeonBackground />
+        <div className="relative z-10 text-center space-y-5">
+          <div
+            className="mx-auto flex items-center justify-center w-16 h-16 rounded-full"
+            style={{
+              backgroundColor: "rgba(15,157,88,0.15)",
+              boxShadow: "0 0 30px rgba(15,157,88,0.3)",
+            }}
+          >
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="#0F9D58"
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-medium text-white">
             Thank you for your interest!
           </h2>
-          <p className="max-w-sm mx-auto" style={{ color: "#676c72" }}>
+          <p className="max-w-sm mx-auto text-white/60">
             We&apos;ve received your information and will be in touch shortly to
             discuss partnership opportunities.
           </p>
@@ -72,7 +100,7 @@ function PartnerWithUs() {
   }
 
   return (
-    <div className="min-h-screen relative" style={{ color: "#202124" }}>
+    <div className="min-h-screen relative">
       <NeonBackground />
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-[#202124]/80 backdrop-blur-md" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
@@ -93,21 +121,44 @@ function PartnerWithUs() {
       <div className="relative z-10 max-w-xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-medium text-white">Partner With Us</h1>
+          <h1 className="text-3xl sm:text-4xl font-medium text-white">Partner With Us</h1>
           <p className="mt-2 text-sm text-white/60">
             GDG on Campus &mdash; Miami Dade College
           </p>
+          {/* Google-color dots */}
+          <div className="flex justify-center gap-1.5 mt-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1a73e8]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#EA4335]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FBBC05]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F9D58]" />
+          </div>
         </div>
 
         {/* Form Card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-6 sm:p-8 space-y-6"
-          style={{ border: "1px solid #dadce0", borderRadius: 8 }}
+          className="bg-[#202124]/70 backdrop-blur-xl sm:p-10 p-6 space-y-7"
+          style={{
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 16,
+            overflow: "hidden",
+            position: "relative",
+          }}
         >
+          {/* Google 4-color gradient bar */}
+          <div
+            className="absolute top-0 left-0 right-0 h-1"
+            style={{
+              background: "linear-gradient(to right, #1a73e8 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
+            }}
+          />
+
+          {/* Section: Company Details */}
+          <SectionDivider color="#0F9D58" label="Company Details" />
+
           {/* Company Name */}
           <div>
-            <label htmlFor="companyName" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="companyName" className={labelClass}>
               Company Name <span style={{ color: "#EA4335" }}>*</span>
             </label>
             <input
@@ -124,7 +175,7 @@ function PartnerWithUs() {
 
           {/* Contact Person */}
           <div>
-            <label htmlFor="contactName" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="contactName" className={labelClass}>
               Contact Person <span style={{ color: "#EA4335" }}>*</span>
             </label>
             <input
@@ -139,10 +190,13 @@ function PartnerWithUs() {
             />
           </div>
 
+          {/* Section: Contact Information */}
+          <SectionDivider color="#1a73e8" label="Contact Information" />
+
           {/* Email & Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="email" className={labelClass} style={{ color: "#202124" }}>
+              <label htmlFor="email" className={labelClass}>
                 Email Address <span style={{ color: "#EA4335" }}>*</span>
               </label>
               <input
@@ -158,7 +212,7 @@ function PartnerWithUs() {
               />
             </div>
             <div>
-              <label htmlFor="phone" className={labelClass} style={{ color: "#202124" }}>
+              <label htmlFor="phone" className={labelClass}>
                 Phone Number <span style={{ color: "#EA4335" }}>*</span>
               </label>
               <input
@@ -177,7 +231,7 @@ function PartnerWithUs() {
 
           {/* Website */}
           <div>
-            <label htmlFor="website" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="website" className={labelClass}>
               Company Website
             </label>
             <input
@@ -192,9 +246,12 @@ function PartnerWithUs() {
             />
           </div>
 
+          {/* Section: Address */}
+          <SectionDivider color="#FBBC05" label="Address" />
+
           {/* Address */}
           <fieldset>
-            <legend className={`${labelClass} mb-3`} style={{ color: "#202124" }}>
+            <legend className={`${labelClass} mb-3`}>
               Company Address <span style={{ color: "#EA4335" }}>*</span>
             </legend>
 
@@ -269,9 +326,12 @@ function PartnerWithUs() {
             </div>
           </fieldset>
 
+          {/* Section: Partnership */}
+          <SectionDivider color="#EA4335" label="Partnership" />
+
           {/* Partnership Interest */}
           <div>
-            <label htmlFor="partnershipInterest" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="partnershipInterest" className={labelClass}>
               Partnership Interest <span style={{ color: "#EA4335" }}>*</span>
             </label>
             <select
@@ -280,7 +340,7 @@ function PartnerWithUs() {
               required
               value={formData.partnershipInterest}
               onChange={handleChange}
-              className={`${inputClass} bg-white`}
+              className={`${inputClass} bg-[#2a2a2e]`}
               style={inputStyle}
             >
               <option value="" disabled>
@@ -296,14 +356,14 @@ function PartnerWithUs() {
 
           {/* Message */}
           <div>
-            <label htmlFor="message" className={labelClass} style={{ color: "#202124" }}>
+            <label htmlFor="message" className={labelClass}>
               Additional Information
             </label>
             <textarea
               id="message"
               name="message"
               rows={4}
-              placeholder="Tell us about your company and how you&apos;d like to partner with GDG on Campus."
+              placeholder="Tell us about your company and how you'd like to partner with GDG on Campus."
               value={formData.message}
               onChange={handleChange}
               className={`${inputClass} resize-y`}
@@ -312,10 +372,17 @@ function PartnerWithUs() {
           </div>
 
           {/* Submit */}
-          <div className="pt-1">
-            <button type="submit" className="btn btn-green w-full">
+          <div className="pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <button
+              type="submit"
+              className="btn btn-green w-full mt-4"
+              style={{ padding: 14, borderRadius: 12, fontWeight: 600 }}
+            >
               Submit Partnership Inquiry
             </button>
+            <p className="text-center text-xs text-white/30 mt-3">
+              Our team will review your inquiry and follow up within a few business days.
+            </p>
           </div>
         </form>
 

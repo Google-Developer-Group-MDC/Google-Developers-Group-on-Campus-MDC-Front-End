@@ -131,32 +131,44 @@ body {
     0 0 8px rgba(234, 67, 53, 0.15);
 }
 
-/* Interest / tag chips */
+/* Interest / tag chips — dark neon pill style */
 .chip {
   display: inline-block;
-  padding: 6px 14px;
+  padding: 6px 16px;
   font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #dadce0;
-  background-color: #fff;
-  color: #202124;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .chip:hover {
-  border-color: #1a73e8;
-  color: #1a73e8;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.15);
+  border-color: rgba(26, 115, 232, 0.5);
+  color: #fff;
+  background-color: rgba(26, 115, 232, 0.08);
+  box-shadow: 0 0 12px rgba(26, 115, 232, 0.2);
   transform: translateY(-1px);
 }
 .chip-active {
-  background-color: #1a73e8;
+  background-color: rgba(26, 115, 232, 0.15);
   color: #fff;
-  border-color: #1a73e8;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+  border-color: rgba(26, 115, 232, 0.5);
+  box-shadow: 0 0 14px rgba(26, 115, 232, 0.3);
 }
 .chip-active:hover {
-  background-color: #1557b0;
+  background-color: rgba(26, 115, 232, 0.22);
   color: #fff;
-  box-shadow: 0 4px 14px rgba(26, 115, 232, 0.4);
+  box-shadow: 0 0 18px rgba(26, 115, 232, 0.4);
+}
+
+/* Autofill fix for dark inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px rgba(42, 42, 46, 0.95) inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
