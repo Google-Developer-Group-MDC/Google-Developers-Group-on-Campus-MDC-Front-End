@@ -142,6 +142,15 @@ function Home() {
           <line x1="1140" y1="340" x2="1440" y2="340" stroke="#4fa868" strokeWidth="1" opacity="0.15" />
           {/* Corner curve — Yellow */}
           <path d="M1440 400 Q1350 400 1350 490 L1350 520" stroke="#c9a020" strokeWidth="1.5" fill="none" opacity="0.2" />
+          {/* GDG Dev logo — 4 capsules forming < > chevrons */}
+          {/* Blue (bottom-left arm of <) */}
+          <rect x="1010" y="276" rx="14" width="80" height="28" stroke="#5a8fd6" strokeWidth="1.5" fill="none" opacity="0.22" transform="rotate(35 1050 290)" />
+          {/* Red (top-left arm of <) */}
+          <rect x="1010" y="216" rx="14" width="80" height="28" stroke="#d47068" strokeWidth="1.5" fill="none" opacity="0.22" transform="rotate(-35 1050 230)" />
+          {/* Green (top-right arm of >) */}
+          <rect x="1110" y="216" rx="14" width="80" height="28" stroke="#4fa868" strokeWidth="1.5" fill="none" opacity="0.22" transform="rotate(35 1150 230)" />
+          {/* Yellow (bottom-right arm of >) */}
+          <rect x="1110" y="276" rx="14" width="80" height="28" stroke="#c9a020" strokeWidth="1.5" fill="none" opacity="0.22" transform="rotate(-35 1150 290)" />
         </svg>
 
         {/* Animated electricity layers — 3 offset streams per shape, Google colors */}
@@ -264,6 +273,12 @@ function Home() {
                 .fnm1 { stroke-dasharray: 12 19; animation: fnm 1.8s -0.6s linear infinite; }
                 .fnm2 { stroke-dasharray: 12 19; animation: fnm 1.8s -1.2s linear infinite; }
                 @keyframes fnm { to { stroke-dashoffset: -31; } }
+
+                /* GDG logo capsules ~192 */
+                .flc0 { stroke-dasharray: 70 122; animation: flc 3s linear infinite; }
+                .flc1 { stroke-dasharray: 70 122; animation: flc 3s -1s linear infinite; }
+                .flc2 { stroke-dasharray: 70 122; animation: flc 3s -2s linear infinite; }
+                @keyframes flc { to { stroke-dashoffset: -192; } }
               `}</style>
             )}
 
@@ -309,6 +324,16 @@ function Home() {
 
             {/* Corner curve — Yellow */}
             <path className={`nf fc${i}`} d="M1440 400 Q1350 400 1350 490 L1350 520" stroke="#efc84a" strokeWidth="2" fill="none" />
+
+            {/* GDG Dev logo — 4 neon capsules */}
+            {/* Blue (bottom-left arm of <) */}
+            <rect className={`nf flc${i}`} x="1010" y="276" rx="14" width="80" height="28" stroke="#7ba8ef" strokeWidth="2" fill="none" transform="rotate(35 1050 290)" />
+            {/* Red (top-left arm of <) */}
+            <rect className={`nf flc${i}`} x="1010" y="216" rx="14" width="80" height="28" stroke="#ef8a82" strokeWidth="2" fill="none" transform="rotate(-35 1050 230)" />
+            {/* Green (top-right arm of >) */}
+            <rect className={`nf flc${i}`} x="1110" y="216" rx="14" width="80" height="28" stroke="#6fc488" strokeWidth="2" fill="none" transform="rotate(35 1150 230)" />
+            {/* Yellow (bottom-right arm of >) */}
+            <rect className={`nf flc${i}`} x="1110" y="276" rx="14" width="80" height="28" stroke="#efc84a" strokeWidth="2" fill="none" transform="rotate(-35 1150 290)" />
           </svg>
         ))}
 
