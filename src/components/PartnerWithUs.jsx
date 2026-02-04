@@ -104,16 +104,16 @@ function PartnerWithUs() {
       <NeonBackground />
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-[#202124]/80 backdrop-blur-md" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-        <div className="max-w-[1200px] mx-auto flex items-center justify-between px-6 h-16">
-          <Link href="/" className="flex items-center">
+        <div className="max-w-[1200px] mx-auto flex items-center justify-between px-4 sm:px-6 h-14 sm:h-16">
+          <Link href="/" className="flex items-center shrink-0">
             <img
               src="/gdg-logo-white.png"
               alt="Google Developer Groups"
-              className="h-7"
+              className="h-5 sm:h-7"
             />
           </Link>
-          <Link href="/" className="btn btn-green">
-            Back to Home
+          <Link href="/" className="btn btn-green shrink-0">
+            Home
           </Link>
         </div>
       </nav>
@@ -273,8 +273,8 @@ function PartnerWithUs() {
                 />
               </div>
 
-              <div className="grid grid-cols-4 gap-3">
-                <div className="col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                <div className="sm:col-span-2">
                   <label htmlFor="city" className="sr-only">
                     City
                   </label>

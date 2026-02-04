@@ -101,23 +101,18 @@ function Home() {
         className="sticky top-0 z-50 bg-[#202124]/80 backdrop-blur-md"
         style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}
       >
-        <div className="max-w-[1200px] mx-auto flex items-center justify-between px-6 h-16">
-          <Link href="/" className="flex items-center gap-3">
+        <div className="max-w-[1200px] mx-auto flex items-center justify-between px-4 sm:px-6 h-14 sm:h-16">
+          <Link href="/" className="flex items-center shrink-0">
             <img
               src="/gdg-logo-white.png"
               alt="Google Developer Groups"
-              className="h-7"
+              className="h-5 sm:h-7"
             />
           </Link>
 
-          <div className="flex items-center gap-3">
-            <Link href="/partner-with-us" className="btn btn-green hidden sm:inline-block">
-              Partner With Us
-            </Link>
-            <Link href="/become-a-member" className="btn btn-blue">
-              Join Us
-            </Link>
-          </div>
+          <Link href="/become-a-member" className="btn btn-blue shrink-0">
+            Join Us
+          </Link>
         </div>
       </nav>
 
@@ -176,6 +171,7 @@ function Home() {
           <rect x="1110" y="216" rx="14" width="80" height="28" stroke="#4fa868" strokeWidth="1.5" fill="none" opacity="0.22" transform="rotate(35 1150 230)" />
           {/* Yellow (bottom-right arm of >) */}
           <rect x="1110" y="276" rx="14" width="80" height="28" stroke="#c9a020" strokeWidth="1.5" fill="none" opacity="0.22" transform="rotate(-35 1150 290)" />
+
         </svg>
 
         {/* Animated electricity layers — 3 offset streams per shape, Google colors */}
@@ -359,6 +355,7 @@ function Home() {
             <rect className={`nf flc${i}`} x="1110" y="216" rx="14" width="80" height="28" stroke="#6fc488" strokeWidth="2" fill="none" transform="rotate(35 1150 230)" />
             {/* Yellow (bottom-right arm of >) */}
             <rect className={`nf flc${i}`} x="1110" y="276" rx="14" width="80" height="28" stroke="#efc84a" strokeWidth="2" fill="none" transform="rotate(-35 1150 290)" />
+
           </svg>
         ))}
 
@@ -367,52 +364,153 @@ function Home() {
           <polyline points="260,425 290,440 260,455" stroke="#ef8a82" strokeWidth="2" fill="none" opacity="0.6" filter="url(#neon)" />
         </svg>
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6 py-20 sm:py-28 flex flex-col items-center text-center">
-          <p className="text-sm font-medium tracking-wide uppercase mb-4 text-[#8ab4f8]">
+        {/* Neon effects for decorative shapes */}
+        <style>{`
+          @keyframes neonPulse {
+            0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 6px var(--glow)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 16px var(--glow)); }
+          }
+          /* Diamond perimeter ≈136 */
+          .dec-diamond { stroke-dasharray: 50 86; animation: decDiamond 3s linear infinite; }
+          @keyframes decDiamond { to { stroke-dashoffset: -136; } }
+          /* Circle r=20 C≈126 */
+          .dec-circle { stroke-dasharray: 40 86; animation: decCircle 3.5s linear infinite; }
+          @keyframes decCircle { to { stroke-dashoffset: -126; } }
+          /* Small circle r=4 C≈25 */
+          .dec-dot { stroke-dasharray: 10 15; animation: decDot 1.5s linear infinite; }
+          @keyframes decDot { to { stroke-dashoffset: -25; } }
+          /* Arc ≈60 */
+          .dec-arc { stroke-dasharray: 25 35; animation: decArc 2s linear infinite; }
+          @keyframes decArc { to { stroke-dashoffset: -60; } }
+          /* Capsule ≈96 */
+          .dec-capsule { stroke-dasharray: 35 61; animation: decCapsule 2.5s linear infinite; }
+          @keyframes decCapsule { to { stroke-dashoffset: -96; } }
+          /* GDG logo capsule ≈82 */
+          .dec-gdg { stroke-dasharray: 30 52; animation: decGdg 2s linear infinite; }
+          @keyframes decGdg { to { stroke-dashoffset: -82; } }
+        `}</style>
+
+        {/* ── Positioned decorative neon shapes (around text, not behind) ── */}
+        {/* Top-left: Green diamond + red dot */}
+        <div className="absolute top-4 left-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#6fc488", animation: "neonPulse 3s ease-in-out infinite 0s" }}>
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <defs>
+              <filter id="glow-tl"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            </defs>
+            <rect className="dec-diamond" x="20" y="20" width="24" height="24" rx="3" stroke="#6fc488" strokeWidth="2.5" transform="rotate(45 32 32)" filter="url(#glow-tl)" />
+            <circle className="dec-dot" cx="48" cy="16" r="4" stroke="#ef8a82" strokeWidth="2" filter="url(#glow-tl)" />
+          </svg>
+        </div>
+
+        {/* Top-right: Blue circle + yellow dot */}
+        <div className="absolute top-4 right-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#7ba8ef", animation: "neonPulse 3s ease-in-out infinite 0.5s" }}>
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <defs>
+              <filter id="glow-tr"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            </defs>
+            <circle className="dec-circle" cx="32" cy="32" r="20" stroke="#7ba8ef" strokeWidth="2.5" filter="url(#glow-tr)" />
+            <circle className="dec-dot" cx="14" cy="48" r="4" stroke="#efc84a" strokeWidth="2" filter="url(#glow-tr)" />
+          </svg>
+        </div>
+
+        {/* Bottom-left: Yellow arc + small blue dot */}
+        <div className="absolute bottom-4 left-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#efc84a", animation: "neonPulse 3s ease-in-out infinite 1s" }}>
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <defs>
+              <filter id="glow-bl"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            </defs>
+            <path className="dec-arc" d="M12 12 Q40 32 12 52" stroke="#efc84a" strokeWidth="3" strokeLinecap="round" filter="url(#glow-bl)" />
+            <circle className="dec-dot" cx="44" cy="20" r="4" stroke="#7ba8ef" strokeWidth="2" filter="url(#glow-bl)" />
+          </svg>
+        </div>
+
+        {/* Bottom-right: Green capsule + small red dot */}
+        <div className="absolute bottom-4 right-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#6fc488", animation: "neonPulse 3s ease-in-out infinite 1.5s" }}>
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <defs>
+              <filter id="glow-br"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            </defs>
+            <rect className="dec-capsule" x="14" y="24" rx="8" width="32" height="16" stroke="#6fc488" strokeWidth="2.5" filter="url(#glow-br)" />
+            <circle className="dec-dot" cx="52" cy="44" r="4" stroke="#ef8a82" strokeWidth="2" filter="url(#glow-br)" />
+          </svg>
+        </div>
+
+        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 py-14 sm:py-28 flex flex-col items-center text-center">
+          <p className="text-xs sm:text-sm font-medium tracking-wide uppercase mb-3 sm:mb-4 text-[#8ab4f8]">
             Google Developer Groups &middot; On Campus Miami Dade College
           </p>
 
-          <h1 className="text-4xl sm:text-5xl font-medium leading-tight max-w-2xl text-white">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-medium leading-tight max-w-2xl text-white" style={{ textShadow: "0 0 20px rgba(32,33,36,0.9)" }}>
             Welcome to the Google Developer Group on Campus
             <br />
             <span className="text-[#8ab4f8]">Miami Dade College</span>
           </h1>
 
-          <p className="mt-5 text-lg max-w-xl leading-relaxed text-white/70">
+          <p className="mt-4 sm:mt-5 text-base sm:text-lg max-w-xl leading-relaxed text-white/70" style={{ textShadow: "0 0 20px rgba(32,33,36,0.9)" }}>
             A community of students passionate about technology. We host
             workshops, build projects, and connect you with industry
             professionals to help launch your career in tech.
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <Link href="/become-a-member" className="btn btn-blue">
-              Become a Member
-            </Link>
-            <Link href="/partner-with-us" className="btn btn-green">
-              Partner With Us
-            </Link>
+          <div className="mt-6 sm:mt-8 relative w-full flex justify-center">
+            {/* Left decoration: rotated diamond + small circles — absolutely positioned */}
+            <div className="absolute right-[calc(50%+100px)] sm:right-[calc(50%+140px)] top-1/2 -translate-y-1/2 pointer-events-none" style={{ "--glow": "#efc84a", animation: "neonPulse 3s ease-in-out infinite 0.5s" }}>
+              <svg className="w-10 h-10 sm:w-14 sm:h-14" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <filter id="glow-lb"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+                </defs>
+                <rect className="dec-diamond" x="16" y="16" width="20" height="20" rx="3" stroke="#efc84a" strokeWidth="2.5" transform="rotate(45 26 26)" filter="url(#glow-lb)" />
+                <circle className="dec-dot" cx="44" cy="12" r="4" stroke="#6fc488" strokeWidth="2" filter="url(#glow-lb)" />
+                <circle className="dec-dot" cx="10" cy="46" r="3" stroke="#ef8a82" strokeWidth="2" filter="url(#glow-lb)" />
+              </svg>
+            </div>
+
+            {/* Centered buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link href="/become-a-member" className="btn btn-blue">
+                Become a Member
+              </Link>
+              <Link href="/partner-with-us" className="btn btn-green">
+                Partner With Us
+              </Link>
+            </div>
+
+            {/* Right decoration: < > GDG chevron logo — absolutely positioned, solid strokes */}
+            <div className="absolute left-[calc(50%+100px)] sm:left-[calc(50%+140px)] top-1/2 -translate-y-1/2 pointer-events-none" style={{ "--glow": "#7ba8ef", animation: "neonPulse 3s ease-in-out infinite 1s" }}>
+              <svg className="w-20 h-20 sm:w-28 sm:h-28" viewBox="0 0 96 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <filter id="glow-rb"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+                </defs>
+                {/* < */}
+                <rect x="2" y="8" rx="7" width="34" height="13" stroke="#7ba8ef" strokeWidth="2.5" transform="rotate(-25 19 14)" filter="url(#glow-rb)" />
+                <rect x="2" y="36" rx="7" width="34" height="13" stroke="#ef8a82" strokeWidth="2.5" transform="rotate(25 19 43)" filter="url(#glow-rb)" />
+                {/* > */}
+                <rect x="60" y="8" rx="7" width="34" height="13" stroke="#6fc488" strokeWidth="2.5" transform="rotate(25 77 14)" filter="url(#glow-rb)" />
+                <rect x="60" y="36" rx="7" width="34" height="13" stroke="#efc84a" strokeWidth="2.5" transform="rotate(-25 77 43)" filter="url(#glow-rb)" />
+              </svg>
+            </div>
           </div>
         </div>
       </section>
 
       {/* dark → light rainbow fade */}
-      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #0F9D58)" }} />
-      <div className="h-20" style={{ background: "linear-gradient(to bottom, #202124, #f8f9fa)" }} />
+      <div className="h-1 sm:h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #0F9D58)" }} />
+      <div className="h-12 sm:h-20" style={{ background: "linear-gradient(to bottom, #202124, #f8f9fa)" }} />
 
       {/* ── Stats (light) ── */}
       <section
-        className="py-20"
+        className="py-12 sm:py-20"
         style={{ backgroundColor: "#f8f9fa" }}
       >
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#4285F4" label="By The Numbers" light />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 mt-8 sm:mt-10">
             {STATS.map((stat, idx) => {
               const color = GOOGLE_COLORS[idx % 4];
               return (
                 <div
                   key={stat.label}
-                  className="bg-white p-6 text-center relative overflow-hidden"
+                  className="bg-white p-4 sm:p-6 text-center relative overflow-hidden"
                   style={{
                     border: "1px solid #e0e0e0",
                     borderRadius: 16,
@@ -428,32 +526,32 @@ function Home() {
                   />
                   {/* Icon */}
                   <div
-                    className="mx-auto mb-3 w-10 h-10 rounded-full flex items-center justify-center"
+                    className="mx-auto mb-2 sm:mb-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center"
                     style={{ backgroundColor: `${color}12` }}
                   >
                     {idx === 0 && (
-                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5" style={{ fill: color }}>
                         <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
                       </svg>
                     )}
                     {idx === 1 && (
-                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5" style={{ fill: color }}>
                         <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
                       </svg>
                     )}
                     {idx === 2 && (
-                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5" style={{ fill: color }}>
                         <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
                       </svg>
                     )}
                     {idx === 3 && (
-                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5" style={{ fill: color }}>
                         <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
                       </svg>
                     )}
                   </div>
                   <p
-                    className="text-3xl sm:text-4xl font-bold"
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold"
                     style={{ color }}
                   >
                     {stat.value}
@@ -469,23 +567,23 @@ function Home() {
       </section>
 
       {/* light → dark rainbow fade */}
-      <div className="h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
-      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #0F9D58, #FBBC05, #EA4335, #4285F4)" }} />
+      <div className="h-12 sm:h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
+      <div className="h-1 sm:h-1.5" style={{ background: "linear-gradient(90deg, #0F9D58, #FBBC05, #EA4335, #4285F4)" }} />
 
       {/* ── What We Do (dark) ── */}
       <section
-        className="py-20"
+        className="py-12 sm:py-20"
         style={{ backgroundColor: "#202124" }}
       >
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#FBBC05" label="What We Do" />
-          <h2 className="text-2xl font-medium text-center mb-3 mt-10 text-white">What We Do</h2>
-          <p className="text-center max-w-lg mx-auto mb-12 text-white/50">
+          <h2 className="text-xl sm:text-2xl font-medium text-center mb-3 mt-8 sm:mt-10 text-white">What We Do</h2>
+          <p className="text-center text-sm sm:text-base max-w-lg mx-auto mb-8 sm:mb-12 text-white/50">
             Empowering students with the skills, connections, and experience to
             succeed in the technology industry.
           </p>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {PILLARS.map((pillar) => (
               <div
                 key={pillar.title}
@@ -515,21 +613,21 @@ function Home() {
       </section>
 
       {/* dark → light rainbow fade */}
-      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #EA4335, #FBBC05, #0F9D58, #4285F4)" }} />
-      <div className="h-20" style={{ background: "linear-gradient(to bottom, #202124, #f8f9fa)" }} />
+      <div className="h-1 sm:h-1.5" style={{ background: "linear-gradient(90deg, #EA4335, #FBBC05, #0F9D58, #4285F4)" }} />
+      <div className="h-12 sm:h-20" style={{ background: "linear-gradient(to bottom, #202124, #f8f9fa)" }} />
 
       {/* ── Testimonials (light) ── */}
       <section
-        className="py-20"
+        className="py-12 sm:py-20"
         style={{ backgroundColor: "#f8f9fa" }}
       >
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#0F9D58" label="Testimonials" light />
-          <h2 className="text-2xl font-medium text-center mb-12 mt-10 text-[#202124]">
+          <h2 className="text-xl sm:text-2xl font-medium text-center mb-8 sm:mb-12 mt-8 sm:mt-10 text-[#202124]">
             What Our Members Say
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             {TESTIMONIALS.map((t) => (
               <div
                 key={t.name}
@@ -566,18 +664,18 @@ function Home() {
       </section>
 
       {/* light → dark rainbow fade */}
-      <div className="h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
-      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #0F9D58, #FBBC05, #EA4335)" }} />
+      <div className="h-12 sm:h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
+      <div className="h-1 sm:h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #0F9D58, #FBBC05, #EA4335)" }} />
 
       {/* ── Join CTA (dark) ── */}
       <section
-        className="py-20"
+        className="py-12 sm:py-20"
         style={{ backgroundColor: "#202124" }}
       >
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#EA4335" label="Get Started" />
           <div
-            className="max-w-3xl mx-auto mt-10 text-center bg-[#202124]/70 backdrop-blur-xl p-10 sm:p-12 relative overflow-hidden"
+            className="max-w-3xl mx-auto mt-8 sm:mt-10 text-center bg-[#202124]/70 backdrop-blur-xl p-6 sm:p-10 md:p-12 relative overflow-hidden"
             style={{
               border: "1px solid rgba(26,115,232,0.3)",
               borderRadius: 16,
@@ -591,10 +689,10 @@ function Home() {
                 background: "linear-gradient(90deg, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
               }}
             />
-            <h2 className="text-2xl sm:text-3xl font-medium text-white">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-medium text-white">
               Ready to Start Your Journey?
             </h2>
-            <p className="mt-3 text-white/60 max-w-md mx-auto">
+            <p className="mt-3 text-sm sm:text-base text-white/60 max-w-md mx-auto">
               Join a growing community of developers, designers, and innovators at
               Miami Dade College. No experience required.
             </p>
@@ -607,11 +705,11 @@ function Home() {
 
       {/* ── Footer ── */}
       <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <img
             src="/gdg-logo-white.png"
             alt="Google Developer Groups"
-            className="h-5"
+            className="h-4 sm:h-5"
           />
 
           <div className="flex items-center gap-5 text-sm text-white/40">

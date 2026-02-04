@@ -33,14 +33,24 @@ body {
 
 .btn {
   display: inline-block;
-  padding: 10px 24px;
-  font-size: 14px;
+  padding: 7px 14px;
+  font-size: 12px;
   font-weight: 500;
-  border-radius: 8px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
   transition: transform 0.15s ease, box-shadow 0.25s ease, background-color 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .btn {
+    padding: 10px 24px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
 }
 
 /* Blue */
