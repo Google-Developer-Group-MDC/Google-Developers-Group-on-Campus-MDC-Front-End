@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
 
 const GOOGLE_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#0F9D58"];
@@ -94,6 +97,28 @@ function SectionDivider({ color, label, light }) {
 }
 
 function Home() {
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    if (!mq.matches) return;
+
+    const cards = document.querySelectorAll(".card-hover-light, .card-hover-dark");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("card-in-view");
+          } else {
+            entry.target.classList.remove("card-in-view");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#202124]">
       {/* ── Navbar ── */}
