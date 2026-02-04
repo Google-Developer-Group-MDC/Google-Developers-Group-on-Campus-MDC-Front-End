@@ -109,7 +109,7 @@ function PartnerWithUs() {
             <img
               src="/gdg-logo-white.png"
               alt="Google Developer Groups"
-              className="h-5 sm:h-7"
+              className="h-4.5 sm:h-7"
             />
           </Link>
           <Link href="/" className="btn btn-green shrink-0">
