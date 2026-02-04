@@ -102,17 +102,39 @@ function Home() {
     if (!mq.matches) return;
 
     const cards = document.querySelectorAll(".card-hover-light, .card-hover-dark");
+    let activeCard = null;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("card-in-view");
-          } else {
-            entry.target.classList.remove("card-in-view");
+          if (!entry.isIntersecting && entry.target === activeCard) {
+            activeCard.classList.remove("card-in-view");
+            activeCard = null;
           }
         });
+
+        // Find the card closest to the vertical center of the viewport
+        const viewportCenter = window.innerHeight / 2;
+        let closest = null;
+        let closestDist = Infinity;
+
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.top + rect.height / 2;
+          const dist = Math.abs(cardCenter - viewportCenter);
+          if (rect.top < window.innerHeight && rect.bottom > 0 && dist < closestDist) {
+            closest = card;
+            closestDist = dist;
+          }
+        });
+
+        if (closest !== activeCard) {
+          if (activeCard) activeCard.classList.remove("card-in-view");
+          if (closest) closest.classList.add("card-in-view");
+          activeCard = closest;
+        }
       },
-      { threshold: 0.3 }
+      { threshold: [0, 0.3, 0.5, 0.7, 1] }
     );
 
     cards.forEach((card) => observer.observe(card));
