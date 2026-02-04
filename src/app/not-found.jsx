@@ -16,7 +16,7 @@ export default function NotFound() {
             <img
               src="/gdg-logo-white.png"
               alt="Google Developer Groups"
-              className="h-4.5 sm:h-7"
+              className="h-4.5 sm:h-7 gdg-logo-glow"
             />
           </Link>
 
@@ -78,7 +78,7 @@ export default function NotFound() {
             <img
               src="/gdg-logo-white.png"
               alt="Google Developer Groups"
-              className="h-5 sm:h-6"
+              className="h-5 sm:h-6 gdg-logo-glow"
             />
 
             <div className="flex items-center gap-5 text-base text-white/40">

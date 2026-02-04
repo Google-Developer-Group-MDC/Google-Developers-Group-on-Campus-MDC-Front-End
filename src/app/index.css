@@ -231,6 +231,45 @@ body {
     0 12px 32px rgba(0,0,0,0.3) !important;
 }
 
+/* GDG logo Google-themed rainbow glow on hover */
+.gdg-logo-glow {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.gdg-logo-glow:hover {
+  transform: scale(1.08);
+  animation: gdgRainbowGlow 1.5s ease-in-out infinite;
+}
+@keyframes gdgRainbowGlow {
+  0%, 100% {
+    filter:
+      drop-shadow(-3px -2px 6px rgba(66, 133, 244, 0.9))
+      drop-shadow(3px -2px 6px rgba(234, 67, 53, 0.9))
+      drop-shadow(3px 2px 6px rgba(251, 188, 5, 0.9))
+      drop-shadow(-3px 2px 6px rgba(15, 157, 88, 0.9));
+  }
+  25% {
+    filter:
+      drop-shadow(3px -2px 8px rgba(66, 133, 244, 0.9))
+      drop-shadow(3px 2px 8px rgba(234, 67, 53, 0.9))
+      drop-shadow(-3px 2px 8px rgba(251, 188, 5, 0.9))
+      drop-shadow(-3px -2px 8px rgba(15, 157, 88, 0.9));
+  }
+  50% {
+    filter:
+      drop-shadow(3px 2px 6px rgba(66, 133, 244, 0.9))
+      drop-shadow(-3px 2px 6px rgba(234, 67, 53, 0.9))
+      drop-shadow(-3px -2px 6px rgba(251, 188, 5, 0.9))
+      drop-shadow(3px -2px 6px rgba(15, 157, 88, 0.9));
+  }
+  75% {
+    filter:
+      drop-shadow(-3px 2px 8px rgba(66, 133, 244, 0.9))
+      drop-shadow(-3px -2px 8px rgba(234, 67, 53, 0.9))
+      drop-shadow(3px -2px 8px rgba(251, 188, 5, 0.9))
+      drop-shadow(3px 2px 8px rgba(15, 157, 88, 0.9));
+  }
+}
+
 /* Autofill fix for dark inputs */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
