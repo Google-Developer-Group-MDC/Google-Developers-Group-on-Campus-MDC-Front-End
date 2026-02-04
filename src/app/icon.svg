@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#202124"/>
+  <!-- Blue (bottom-left arm of <) -->
+  <rect x="10" y="34" rx="6" width="26" height="11" fill="#4285F4" transform="rotate(35 23 39.5)"/>
+  <!-- Red (top-left arm of <) -->
+  <rect x="10" y="19" rx="6" width="26" height="11" fill="#EA4335" transform="rotate(-35 23 24.5)"/>
+  <!-- Green (top-right arm of >) -->
+  <rect x="28" y="19" rx="6" width="26" height="11" fill="#0F9D58" transform="rotate(35 41 24.5)"/>
+  <!-- Yellow (bottom-right arm of >) -->
+  <rect x="28" y="34" rx="6" width="26" height="11" fill="#FBBC05" transform="rotate(-35 41 39.5)"/>
+</svg>
