@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 
 const GOOGLE_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#0F9D58"];
@@ -96,137 +96,42 @@ function SectionDivider({ color, label, light }) {
   );
 }
 
-function MobileCarousel({ children, count, dotColor = "#5f6368", gridClass = "" }) {
-  const scrollRef = useRef(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  const updateDots = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cards = el.querySelectorAll(":scope > *");
-    const center = el.getBoundingClientRect().left + el.offsetWidth / 2;
-    let closest = 0;
-    let closestDist = Infinity;
-    cards.forEach((card, i) => {
-      const rect = card.getBoundingClientRect();
-      const dist = Math.abs(rect.left + rect.width / 2 - center);
-      if (dist < closestDist) { closest = i; closestDist = dist; }
-    });
-    setActiveIdx(closest);
-  }, []);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateDots, { passive: true });
-    const raf = requestAnimationFrame(updateDots);
-    return () => { cancelAnimationFrame(raf); el.removeEventListener("scroll", updateDots); };
-  }, [updateDots]);
-
-  function scrollTo(idx) {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cards = el.querySelectorAll(":scope > *");
-    if (cards[idx]) cards[idx].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-  }
-
-  return (
-    <div className="relative">
-      {/* Carousel track */}
-      <div
-        ref={scrollRef}
-        className={`flex sm:grid ${gridClass} gap-3 sm:gap-5 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scroll-smooth pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 carousel-hide-scrollbar`}
-      >
-        {children}
-      </div>
-
-      {/* Arrows — mobile only */}
-      <button
-        onClick={() => scrollTo(Math.max(0, activeIdx - 1))}
-        className="sm:hidden absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-10 w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center"
-        style={{ opacity: activeIdx === 0 ? 0.3 : 1 }}
-        aria-label="Previous"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#202124" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button
-        onClick={() => scrollTo(Math.min(count - 1, activeIdx + 1))}
-        className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-10 w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center"
-        style={{ opacity: activeIdx === count - 1 ? 0.3 : 1 }}
-        aria-label="Next"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#202124" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-
-      {/* Dots — mobile only */}
-      <div className="sm:hidden flex justify-center gap-2 mt-3">
-        {Array.from({ length: count }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollTo(i)}
-            className="w-2 h-2 rounded-full transition-all duration-300"
-            style={{
-              backgroundColor: i === activeIdx ? dotColor : "rgba(0,0,0,0.15)",
-              transform: i === activeIdx ? "scale(1.4)" : "scale(1)",
-            }}
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Home() {
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 639px)");
     if (!mq.matches) return;
 
     const cards = document.querySelectorAll(".card-hover-light, .card-hover-dark");
-    const carousels = document.querySelectorAll(".carousel-hide-scrollbar");
     let activeCard = null;
 
-    function updateActiveCard() {
-      const viewportCenterX = window.innerWidth / 2;
-      const viewportCenterY = window.innerHeight / 2;
-      let closest = null;
-      let closestDist = Infinity;
+    const observer = new IntersectionObserver(
+      () => {
+        const viewportCenter = window.innerHeight / 2;
+        let closest = null;
+        let closestDist = Infinity;
 
-      cards.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0
-          && rect.left < window.innerWidth && rect.right > 0;
-        if (!isVisible) return;
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const dist = Math.abs(rect.top + rect.height / 2 - viewportCenter);
+            if (dist < closestDist) {
+              closest = card;
+              closestDist = dist;
+            }
+          }
+        });
 
-        const cardCenterX = rect.left + rect.width / 2;
-        const cardCenterY = rect.top + rect.height / 2;
-        const dist = Math.hypot(cardCenterX - viewportCenterX, cardCenterY - viewportCenterY);
-        if (dist < closestDist) {
-          closest = card;
-          closestDist = dist;
+        if (closest !== activeCard) {
+          if (activeCard) activeCard.classList.remove("card-in-view");
+          if (closest) closest.classList.add("card-in-view");
+          activeCard = closest;
         }
-      });
-
-      if (closest !== activeCard) {
-        if (activeCard) activeCard.classList.remove("card-in-view");
-        if (closest) closest.classList.add("card-in-view");
-        activeCard = closest;
-      }
-    }
-
-    const observer = new IntersectionObserver(() => updateActiveCard(), {
-      threshold: [0, 0.3, 0.5, 0.7, 1],
-    });
+      },
+      { threshold: [0, 0.3, 0.5, 0.7, 1] }
+    );
 
     cards.forEach((card) => observer.observe(card));
-
-    // Also listen for horizontal scroll on carousels
-    carousels.forEach((c) => c.addEventListener("scroll", updateActiveCard, { passive: true }));
-
-    return () => {
-      observer.disconnect();
-      carousels.forEach((c) => c.removeEventListener("scroll", updateActiveCard));
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -646,13 +551,13 @@ function Home() {
       >
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#4285F4" label="By The Numbers" light />
-          <MobileCarousel count={STATS.length} dotColor="#4285F4" gridClass="sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 mt-8 sm:mt-10">
             {STATS.map((stat, idx) => {
               const color = GOOGLE_COLORS[idx % 4];
               return (
                 <div
                   key={stat.label}
-                  className="card-hover-light bg-white p-4 sm:p-6 text-center relative overflow-hidden snap-center shrink-0 w-[70vw] sm:w-auto"
+                  className="card-hover-light bg-white p-4 sm:p-6 text-center relative overflow-hidden"
                   style={{
                     border: "1px solid #e0e0e0",
                     borderRadius: 16,
@@ -704,7 +609,7 @@ function Home() {
                 </div>
               );
             })}
-          </MobileCarousel>
+          </div>
         </div>
       </section>
 
@@ -769,11 +674,11 @@ function Home() {
             What Our Members Say
           </h2>
 
-          <MobileCarousel count={TESTIMONIALS.length} dotColor="#0F9D58" gridClass="sm:grid-cols-1 md:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             {TESTIMONIALS.map((t) => (
               <div
                 key={t.name}
-                className="card-hover-light bg-white p-5 flex flex-col relative overflow-hidden snap-center shrink-0 w-[80vw] sm:w-auto"
+                className="card-hover-light bg-white p-5 flex flex-col relative overflow-hidden"
                 style={{
                   border: "1px solid #e0e0e0",
                   borderRadius: 16,
@@ -801,7 +706,7 @@ function Home() {
                 </div>
               </div>
             ))}
-          </MobileCarousel>
+          </div>
         </div>
       </section>
 

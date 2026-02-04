@@ -198,7 +198,6 @@ body {
 /* Scroll-triggered glow on mobile */
 @media (max-width: 639px) {
   .card-hover-light.card-in-view {
-    transform: translateY(-4px) scale(1.01);
     border-color: transparent !important;
     box-shadow:
       0 12px 32px rgba(0,0,0,0.1),
@@ -212,7 +211,6 @@ body {
       0 0 60px rgba(15,157,88,0.2) !important;
   }
   .card-hover-dark.card-in-view {
-    transform: translateY(-4px) scale(1.01);
     border-color: rgba(66,133,244,0.6) !important;
     box-shadow:
       0 0 40px rgba(26,115,232,0.3),
@@ -231,15 +229,6 @@ body {
     0 0 40px rgba(26,115,232,0.3),
     0 0 80px rgba(66,133,244,0.15),
     0 12px 32px rgba(0,0,0,0.3) !important;
-}
-
-/* Hide scrollbar on carousels but keep scroll */
-.carousel-hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.carousel-hide-scrollbar::-webkit-scrollbar {
-  display: none;
 }
 
 /* Autofill fix for dark inputs */
