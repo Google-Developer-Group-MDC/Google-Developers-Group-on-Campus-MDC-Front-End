@@ -233,6 +233,15 @@ body {
     0 12px 32px rgba(0,0,0,0.3) !important;
 }
 
+/* Hide scrollbar on carousels but keep scroll */
+.carousel-hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Autofill fix for dark inputs */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
