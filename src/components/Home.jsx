@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+const GOOGLE_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#0F9D58"];
+
 const STATS = [
   { value: "200+", label: "Members" },
   { value: "30+", label: "Events Hosted" },
@@ -71,15 +73,38 @@ const TESTIMONIALS = [
   },
 ];
 
+function SectionDivider({ color, label, light }) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <span
+        className="inline-block w-2 h-2 rounded-full shrink-0"
+        style={{ backgroundColor: color }}
+      />
+      <span
+        className={`text-xs font-medium uppercase tracking-wider whitespace-nowrap ${light ? "text-[#5f6368]" : "text-white/50"}`}
+      >
+        {label}
+      </span>
+      <span
+        className="flex-1 h-px"
+        style={{ backgroundColor: light ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.06)" }}
+      />
+    </div>
+  );
+}
+
 function Home() {
   return (
-    <div className="min-h-screen bg-white" style={{ color: "#202124" }}>
+    <div className="min-h-screen bg-[#202124]">
       {/* ── Navbar ── */}
-      <nav className="sticky top-0 z-50 bg-white" style={{ borderBottom: "1px solid #dadce0" }}>
+      <nav
+        className="sticky top-0 z-50 bg-[#202124]/80 backdrop-blur-md"
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}
+      >
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-6 h-16">
           <Link href="/" className="flex items-center gap-3">
             <img
-              src="/gdg-logo.png"
+              src="/gdg-logo-white.png"
               alt="Google Developer Groups"
               className="h-7"
             />
@@ -370,30 +395,92 @@ function Home() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
-      <section className="max-w-[1200px] mx-auto px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {STATS.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl sm:text-4xl font-medium" style={{ color: "#1a73e8" }}>
-                {stat.value}
-              </p>
-              <p className="mt-1 text-sm" style={{ color: "#676c72" }}>
-                {stat.label}
-              </p>
-            </div>
-          ))}
+      {/* dark → light rainbow fade */}
+      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #0F9D58)" }} />
+      <div className="h-20" style={{ background: "linear-gradient(to bottom, #202124, #f8f9fa)" }} />
+
+      {/* ── Stats (light) ── */}
+      <section
+        className="py-20"
+        style={{ backgroundColor: "#f8f9fa" }}
+      >
+        <div className="max-w-[1200px] mx-auto px-6">
+          <SectionDivider color="#4285F4" label="By The Numbers" light />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-10">
+            {STATS.map((stat, idx) => {
+              const color = GOOGLE_COLORS[idx % 4];
+              return (
+                <div
+                  key={stat.label}
+                  className="bg-white p-6 text-center relative overflow-hidden"
+                  style={{
+                    border: "1px solid #e0e0e0",
+                    borderRadius: 16,
+                    boxShadow: `0 2px 8px rgba(0,0,0,0.06), 0 4px 20px ${color}15`,
+                  }}
+                >
+                  {/* Google 4-color gradient bar */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-[3px]"
+                    style={{
+                      background: "linear-gradient(90deg, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
+                    }}
+                  />
+                  {/* Icon */}
+                  <div
+                    className="mx-auto mb-3 w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${color}12` }}
+                  >
+                    {idx === 0 && (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                      </svg>
+                    )}
+                    {idx === 1 && (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                        <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+                      </svg>
+                    )}
+                    {idx === 2 && (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+                      </svg>
+                    )}
+                    {idx === 3 && (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" style={{ fill: color }}>
+                        <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
+                      </svg>
+                    )}
+                  </div>
+                  <p
+                    className="text-3xl sm:text-4xl font-bold"
+                    style={{ color }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-[#5f6368]">
+                    {stat.label}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* ── What We Do ── */}
-      <section className="bg-[#f8f9fa]" style={{ borderTop: "1px solid #dadce0", borderBottom: "1px solid #dadce0" }}>
-        <div className="max-w-[1200px] mx-auto px-6 py-16">
-          <h2 className="text-2xl font-medium text-center mb-3">What We Do</h2>
-          <p
-            className="text-center max-w-lg mx-auto mb-12"
-            style={{ color: "#676c72" }}
-          >
+      {/* light → dark rainbow fade */}
+      <div className="h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
+      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #0F9D58, #FBBC05, #EA4335, #4285F4)" }} />
+
+      {/* ── What We Do (dark) ── */}
+      <section
+        className="py-20"
+        style={{ backgroundColor: "#202124" }}
+      >
+        <div className="max-w-[1200px] mx-auto px-6">
+          <SectionDivider color="#FBBC05" label="What We Do" />
+          <h2 className="text-2xl font-medium text-center mb-3 mt-10 text-white">What We Do</h2>
+          <p className="text-center max-w-lg mx-auto mb-12 text-white/50">
             Empowering students with the skills, connections, and experience to
             succeed in the technology industry.
           </p>
@@ -402,12 +489,22 @@ function Home() {
             {PILLARS.map((pillar) => (
               <div
                 key={pillar.title}
-                className="bg-white p-5"
-                style={{ border: "1px solid #dadce0", borderRadius: 8 }}
+                className="bg-[#202124]/70 backdrop-blur-xl p-5 relative overflow-hidden"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 16,
+                }}
               >
-                <div className="mb-3">{pillar.icon}</div>
-                <h3 className="text-base font-medium mb-1">{pillar.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#676c72" }}>
+                {/* Google 4-color gradient bar */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-[3px]"
+                  style={{
+                    background: "linear-gradient(90deg, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
+                  }}
+                />
+                <div className="mb-3 mt-1">{pillar.icon}</div>
+                <h3 className="text-base font-medium mb-1 text-white">{pillar.title}</h3>
+                <p className="text-sm leading-relaxed text-white/60">
                   {pillar.description}
                 </p>
               </div>
@@ -416,71 +513,116 @@ function Home() {
         </div>
       </section>
 
-      {/* ── Testimonials ── */}
-      <section className="max-w-[1200px] mx-auto px-6 py-16">
-        <h2 className="text-2xl font-medium text-center mb-12">
-          What Our Members Say
-        </h2>
+      {/* dark → light rainbow fade */}
+      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #EA4335, #FBBC05, #0F9D58, #4285F4)" }} />
+      <div className="h-20" style={{ background: "linear-gradient(to bottom, #202124, #f8f9fa)" }} />
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {TESTIMONIALS.map((t) => (
-            <div
-              key={t.name}
-              className="bg-white p-5 flex flex-col"
-              style={{ border: "1px solid #dadce0", borderRadius: 8 }}
-            >
-              <p className="text-sm leading-relaxed flex-1" style={{ color: "#676c72" }}>
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div className="mt-4 pt-4" style={{ borderTop: "1px solid #dadce0" }}>
-                <p className="text-sm font-medium">{t.name}</p>
-                <p className="text-xs" style={{ color: "#676c72" }}>
-                  {t.role}
+      {/* ── Testimonials (light) ── */}
+      <section
+        className="py-20"
+        style={{ backgroundColor: "#f8f9fa" }}
+      >
+        <div className="max-w-[1200px] mx-auto px-6">
+          <SectionDivider color="#0F9D58" label="Testimonials" light />
+          <h2 className="text-2xl font-medium text-center mb-12 mt-10 text-[#202124]">
+            What Our Members Say
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-5">
+            {TESTIMONIALS.map((t) => (
+              <div
+                key={t.name}
+                className="bg-white p-5 flex flex-col relative overflow-hidden"
+                style={{
+                  border: "1px solid #e0e0e0",
+                  borderRadius: 16,
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                }}
+              >
+                {/* Google 4-color gradient bar */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-[3px]"
+                  style={{
+                    background: "linear-gradient(90deg, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
+                  }}
+                />
+                <p className="text-sm leading-relaxed flex-1 text-[#5f6368] mt-1">
+                  &ldquo;{t.quote}&rdquo;
                 </p>
+                <div
+                  className="mt-4 pt-4"
+                  style={{ borderTop: "1px solid #e8eaed" }}
+                >
+                  <p className="text-sm font-medium text-[#202124]">{t.name}</p>
+                  <p className="text-xs text-[#80868b]">
+                    {t.role}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── Join CTA ── */}
+      {/* light → dark rainbow fade */}
+      <div className="h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
+      <div className="h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #0F9D58, #FBBC05, #EA4335)" }} />
+
+      {/* ── Join CTA (dark) ── */}
       <section
-        className="text-center text-white"
-        style={{ backgroundColor: "#1a73e8" }}
+        className="py-20"
+        style={{ backgroundColor: "#202124" }}
       >
-        <div className="max-w-[1200px] mx-auto px-6 py-16">
-          <h2 className="text-2xl sm:text-3xl font-medium">
-            Ready to Start Your Journey?
-          </h2>
-          <p className="mt-3 text-white/80 max-w-md mx-auto">
-            Join a growing community of developers, designers, and innovators at
-            Miami Dade College. No experience required.
-          </p>
-          <Link href="/become-a-member" className="btn btn-yellow mt-6">
-            Become a Member
-          </Link>
+        <div className="max-w-[1200px] mx-auto px-6">
+          <SectionDivider color="#EA4335" label="Get Started" />
+          <div
+            className="max-w-3xl mx-auto mt-10 text-center bg-[#202124]/70 backdrop-blur-xl p-10 sm:p-12 relative overflow-hidden"
+            style={{
+              border: "1px solid rgba(26,115,232,0.3)",
+              borderRadius: 16,
+              boxShadow: "0 0 30px rgba(26,115,232,0.15)",
+            }}
+          >
+            {/* Google 4-color gradient bar */}
+            <div
+              className="absolute top-0 left-0 right-0 h-[3px]"
+              style={{
+                background: "linear-gradient(90deg, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #0F9D58 75%)",
+              }}
+            />
+            <h2 className="text-2xl sm:text-3xl font-medium text-white">
+              Ready to Start Your Journey?
+            </h2>
+            <p className="mt-3 text-white/60 max-w-md mx-auto">
+              Join a growing community of developers, designers, and innovators at
+              Miami Dade College. No experience required.
+            </p>
+            <Link href="/become-a-member" className="btn btn-yellow mt-6">
+              Become a Member
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ borderTop: "1px solid #dadce0" }}>
+      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <img
-            src="/gdg-logo.png"
+            src="/gdg-logo-white.png"
             alt="Google Developer Groups"
             className="h-5"
           />
 
-          <div className="flex items-center gap-5 text-sm" style={{ color: "#676c72" }}>
-            <Link href="/become-a-member" className="hover:underline">
+          <div className="flex items-center gap-5 text-sm text-white/40">
+            <Link href="/become-a-member" className="hover:text-white transition-colors">
               Join
             </Link>
-            <Link href="/partner-with-us" className="hover:underline">
+            <Link href="/partner-with-us" className="hover:text-white transition-colors">
               Partner
             </Link>
           </div>
 
-          <p className="text-xs" style={{ color: "#676c72" }}>
+          <p className="text-xs text-white/30">
             &copy; {new Date().getFullYear()} GDG on Campus &mdash; MDC
           </p>
         </div>
