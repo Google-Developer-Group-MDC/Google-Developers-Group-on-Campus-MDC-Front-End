@@ -392,7 +392,7 @@ function Home() {
 
         {/* ── Positioned decorative neon shapes (around text, not behind) ── */}
         {/* Top-left: Green diamond + red dot */}
-        <div className="absolute top-4 left-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#6fc488", animation: "neonPulse 3s ease-in-out infinite 0s" }}>
+        <div className="absolute top-4 left-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6] md:hidden" style={{ "--glow": "#6fc488", animation: "neonPulse 3s ease-in-out infinite 0s" }}>
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <defs>
               <filter id="glow-tl"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -403,7 +403,7 @@ function Home() {
         </div>
 
         {/* Top-right: Blue circle + yellow dot */}
-        <div className="absolute top-4 right-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#7ba8ef", animation: "neonPulse 3s ease-in-out infinite 0.5s" }}>
+        <div className="absolute top-4 right-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6] md:hidden" style={{ "--glow": "#7ba8ef", animation: "neonPulse 3s ease-in-out infinite 0.5s" }}>
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <defs>
               <filter id="glow-tr"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -414,7 +414,7 @@ function Home() {
         </div>
 
         {/* Bottom-left: Yellow arc + small blue dot */}
-        <div className="absolute bottom-4 left-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#efc84a", animation: "neonPulse 3s ease-in-out infinite 1s" }}>
+        <div className="absolute bottom-4 left-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6] md:hidden" style={{ "--glow": "#efc84a", animation: "neonPulse 3s ease-in-out infinite 1s" }}>
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <defs>
               <filter id="glow-bl"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -425,7 +425,7 @@ function Home() {
         </div>
 
         {/* Bottom-right: Green capsule + small red dot */}
-        <div className="absolute bottom-4 right-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6]" style={{ "--glow": "#6fc488", animation: "neonPulse 3s ease-in-out infinite 1.5s" }}>
+        <div className="absolute bottom-4 right-4 w-12 h-12 sm:w-20 sm:h-20 pointer-events-none z-[6] md:hidden" style={{ "--glow": "#6fc488", animation: "neonPulse 3s ease-in-out infinite 1.5s" }}>
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <defs>
               <filter id="glow-br"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -454,7 +454,7 @@ function Home() {
 
           <div className="mt-6 sm:mt-8 relative w-full flex justify-center">
             {/* Left decoration: rotated diamond + small circles — absolutely positioned */}
-            <div className="absolute right-[calc(50%+100px)] sm:right-[calc(50%+140px)] top-1/2 -translate-y-1/2 pointer-events-none" style={{ "--glow": "#efc84a", animation: "neonPulse 3s ease-in-out infinite 0.5s" }}>
+            <div className="absolute right-[calc(50%+100px)] sm:right-[calc(50%+140px)] top-1/2 -translate-y-1/2 pointer-events-none md:hidden" style={{ "--glow": "#efc84a", animation: "neonPulse 3s ease-in-out infinite 0.5s" }}>
               <svg className="w-10 h-10 sm:w-14 sm:h-14" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <filter id="glow-lb"><feGaussianBlur stdDeviation="2.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -476,7 +476,7 @@ function Home() {
             </div>
 
             {/* Right decoration: < > GDG chevron logo — absolutely positioned, solid strokes */}
-            <div className="absolute left-[calc(50%+100px)] sm:left-[calc(50%+140px)] top-1/2 -translate-y-1/2 pointer-events-none" style={{ "--glow": "#7ba8ef", animation: "neonPulse 3s ease-in-out infinite 1s" }}>
+            <div className="absolute left-[calc(50%+100px)] sm:left-[calc(50%+140px)] top-1/2 -translate-y-1/2 pointer-events-none md:hidden" style={{ "--glow": "#7ba8ef", animation: "neonPulse 3s ease-in-out infinite 1s" }}>
               <svg className="w-20 h-20 sm:w-28 sm:h-28" viewBox="0 0 96 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <filter id="glow-rb"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
