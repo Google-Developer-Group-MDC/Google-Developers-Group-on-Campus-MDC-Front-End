@@ -416,7 +416,7 @@ function Home() {
                   style={{
                     border: "1px solid #e0e0e0",
                     borderRadius: 16,
-                    boxShadow: `0 2px 8px rgba(0,0,0,0.06), 0 4px 20px ${color}15`,
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.06), -10px 0 40px rgba(66,133,244,0.45), -4px 6px 35px rgba(234,67,53,0.35), 4px 6px 35px rgba(251,188,5,0.35), 10px 0 40px rgba(15,157,88,0.45)",
                   }}
                 >
                   {/* Google 4-color gradient bar */}
@@ -491,8 +491,9 @@ function Home() {
                 key={pillar.title}
                 className="bg-[#202124]/70 backdrop-blur-xl p-5 relative overflow-hidden"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(26,115,232,0.3)",
                   borderRadius: 16,
+                  boxShadow: "0 0 30px rgba(26,115,232,0.15)",
                 }}
               >
                 {/* Google 4-color gradient bar */}
@@ -536,7 +537,7 @@ function Home() {
                 style={{
                   border: "1px solid #e0e0e0",
                   borderRadius: 16,
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.06), -10px 0 40px rgba(66,133,244,0.45), -4px 6px 35px rgba(234,67,53,0.35), 4px 6px 35px rgba(251,188,5,0.35), 10px 0 40px rgba(15,157,88,0.45)",
                 }}
               >
                 {/* Google 4-color gradient bar */}
