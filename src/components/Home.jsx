@@ -517,7 +517,7 @@ function Home() {
               return (
                 <div
                   key={stat.label}
-                  className="bg-white p-4 sm:p-6 text-center relative overflow-hidden"
+                  className="card-hover-light bg-white p-4 sm:p-6 text-center relative overflow-hidden"
                   style={{
                     border: "1px solid #e0e0e0",
                     borderRadius: 16,
@@ -594,7 +594,7 @@ function Home() {
             {PILLARS.map((pillar) => (
               <div
                 key={pillar.title}
-                className="bg-[#202124]/70 backdrop-blur-xl p-5 relative overflow-hidden"
+                className="card-hover-dark bg-[#202124]/70 backdrop-blur-xl p-5 relative overflow-hidden"
                 style={{
                   border: "1px solid rgba(26,115,232,0.3)",
                   borderRadius: 16,
@@ -638,7 +638,7 @@ function Home() {
             {TESTIMONIALS.map((t) => (
               <div
                 key={t.name}
-                className="bg-white p-5 flex flex-col relative overflow-hidden"
+                className="card-hover-light bg-white p-5 flex flex-col relative overflow-hidden"
                 style={{
                   border: "1px solid #e0e0e0",
                   borderRadius: 16,
@@ -682,7 +682,7 @@ function Home() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#EA4335" label="Get Started" />
           <div
-            className="max-w-3xl mx-auto mt-8 sm:mt-10 text-center bg-[#202124]/70 backdrop-blur-xl p-6 sm:p-10 md:p-12 relative overflow-hidden"
+            className="card-hover-dark max-w-3xl mx-auto mt-8 sm:mt-10 text-center bg-[#202124]/70 backdrop-blur-xl p-6 sm:p-10 md:p-12 relative overflow-hidden"
             style={{
               border: "1px solid rgba(26,115,232,0.3)",
               borderRadius: 16,
