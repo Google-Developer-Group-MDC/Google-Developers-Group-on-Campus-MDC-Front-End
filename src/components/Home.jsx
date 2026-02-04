@@ -106,13 +106,20 @@ function Home() {
             <img
               src="/gdg-logo-white.png"
               alt="Google Developer Groups"
-              className="h-5 sm:h-7"
+              className="h-4.5 sm:h-7"
             />
           </Link>
 
-          <Link href="/become-a-member" className="btn btn-blue shrink-0">
-            Join Us
-          </Link>
+          <div className="flex items-center gap-1.5 sm:gap-3">
+            <Link href="/become-a-member" className="btn btn-blue shrink-0 text-[10px] px-2.5 py-1.5 sm:text-sm sm:px-6 sm:py-2.5">
+              <span className="sm:hidden">Join Now!</span>
+              <span className="hidden sm:inline">Become a Member</span>
+            </Link>
+            <Link href="/partner-with-us" className="btn btn-green shrink-0 text-[10px] px-2.5 py-1.5 sm:text-sm sm:px-6 sm:py-2.5">
+              <span className="sm:hidden">Partner with us!</span>
+              <span className="hidden sm:inline">Partner With Us</span>
+            </Link>
+          </div>
         </div>
       </nav>
 
