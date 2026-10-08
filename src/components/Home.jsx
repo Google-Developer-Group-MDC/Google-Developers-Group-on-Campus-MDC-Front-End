@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { EventsTeaser } from "./Events";
+import { apiFetch } from "../lib/api";
 
 const GOOGLE_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#0F9D58"];
 
 const STATS = [
-  { value: "200+", label: "Members" },
+  // Fallback until the live count (GDG chapter members + site sign-ups) loads from the API.
+  { value: "300+", label: "Members" },
   { value: "30+", label: "Events Hosted" },
   { value: "15+", label: "Workshops" },
   { value: "10+", label: "Industry Partners" },
@@ -97,7 +99,29 @@ function SectionDivider({ color, label, light }) {
   );
 }
 
+// Live community size from the back-end; null while loading or if the API is unreachable.
+function useMemberCount() {
+  const [count, setCount] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    apiFetch("/api/stats")
+      .then((data) => {
+        if (!cancelled && data.members.total > 0) setCount(data.members.total);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return count;
+}
+
 function Home() {
+  const memberCount = useMemberCount();
+  const stats = STATS.map((stat, idx) =>
+    idx === 0 && memberCount !== null ? { ...stat, value: memberCount.toLocaleString("en-US") } : stat
+  );
+
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 639px)");
     if (!mq.matches) return;
@@ -556,7 +580,7 @@ function Home() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <SectionDivider color="#4285F4" label="By The Numbers" light />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 mt-8 sm:mt-10">
-            {STATS.map((stat, idx) => {
+            {stats.map((stat, idx) => {
               const color = GOOGLE_COLORS[idx % 4];
               return (
                 <div
