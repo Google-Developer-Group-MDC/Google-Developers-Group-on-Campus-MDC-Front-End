@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { EventsTeaser } from "./Events";
 
 const GOOGLE_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#0F9D58"];
 
@@ -151,6 +152,9 @@ function Home() {
           </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
+            <Link href="/events" className="btn btn-red shrink-0 hidden! sm:inline-block! text-[10px] px-2.5 py-1.5 sm:text-sm sm:px-6 sm:py-2.5">
+              Events
+            </Link>
             <Link href="/become-a-member" className="btn btn-blue shrink-0 text-[10px] px-2.5 py-1.5 sm:text-sm sm:px-6 sm:py-2.5">
               <span className="sm:hidden">Join Now!</span>
               <span className="hidden sm:inline">Become a Member</span>
@@ -714,6 +718,17 @@ function Home() {
       <div className="h-12 sm:h-20" style={{ background: "linear-gradient(to bottom, #f8f9fa, #202124)" }} />
       <div className="h-1 sm:h-1.5" style={{ background: "linear-gradient(90deg, #4285F4, #0F9D58, #FBBC05, #EA4335)" }} />
 
+      {/* ── Events (dark) ── */}
+      <section
+        className="py-12 sm:py-20"
+        style={{ backgroundColor: "#202124" }}
+      >
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+          <SectionDivider color="#4285F4" label="Events" />
+          <EventsTeaser />
+        </div>
+      </section>
+
       {/* ── Join CTA (dark) ── */}
       <section
         className="py-12 sm:py-20"
@@ -761,6 +776,9 @@ function Home() {
             />
 
             <div className="flex items-center gap-5 text-base text-white/40">
+              <Link href="/events" className="hover:text-white transition-colors">
+                Events
+              </Link>
               <Link href="/become-a-member" className="hover:text-white transition-colors">
                 Join
               </Link>

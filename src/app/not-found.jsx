@@ -21,6 +21,9 @@ export default function NotFound() {
           </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
+            <Link href="/events" className="btn btn-red shrink-0 hidden! sm:inline-block! text-[10px] px-2.5 py-1.5 sm:text-sm sm:px-6 sm:py-2.5">
+              Events
+            </Link>
             <Link href="/become-a-member" className="btn btn-blue shrink-0 text-[10px] px-2.5 py-1.5 sm:text-sm sm:px-6 sm:py-2.5">
               <span className="sm:hidden">Join Now!</span>
               <span className="hidden sm:inline">Become a Member</span>
@@ -82,6 +85,9 @@ export default function NotFound() {
             />
 
             <div className="flex items-center gap-5 text-base text-white/40">
+              <Link href="/events" className="hover:text-white transition-colors">
+                Events
+              </Link>
               <Link href="/become-a-member" className="hover:text-white transition-colors">
                 Join
               </Link>

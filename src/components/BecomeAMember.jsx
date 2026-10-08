@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { NeonBackground } from "./NeonBackground";
+import { FieldError, FormError, Honeypot } from "./FormHelpers";
+import { apiFetch } from "../lib/api";
 
 const YEAR_OPTIONS = ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"];
 
@@ -59,6 +61,10 @@ function BecomeAMember() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [honeypot, setHoneypot] = useState("");
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -74,11 +80,23 @@ function BecomeAMember() {
     }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // TODO: connect to backend / Airtable API
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
+    setSubmitting(true);
+    setError("");
+    setFieldErrors({});
+    try {
+      await apiFetch("/api/members", {
+        method: "POST",
+        body: { ...formData, company_website: honeypot },
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message);
+      setFieldErrors(err.fields || {});
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -172,6 +190,8 @@ function BecomeAMember() {
             }}
           />
 
+          <Honeypot value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+
           {/* Section: Personal Information */}
           <SectionDivider color="#1a73e8" label="Personal Information" />
 
@@ -191,6 +211,7 @@ function BecomeAMember() {
                 className={inputClass}
                 style={inputStyle}
               />
+              <FieldError fields={fieldErrors} name="firstName" />
             </div>
             <div>
               <label htmlFor="lastName" className={labelClass}>
@@ -206,6 +227,7 @@ function BecomeAMember() {
                 className={inputClass}
                 style={inputStyle}
               />
+              <FieldError fields={fieldErrors} name="lastName" />
             </div>
           </div>
 
@@ -225,6 +247,7 @@ function BecomeAMember() {
               className={inputClass}
               style={inputStyle}
             />
+            <FieldError fields={fieldErrors} name="email" />
           </div>
 
           {/* Phone */}
@@ -242,6 +265,7 @@ function BecomeAMember() {
               className={inputClass}
               style={inputStyle}
             />
+            <FieldError fields={fieldErrors} name="phone" />
           </div>
 
           {/* Section: Academic Details */}
@@ -263,6 +287,7 @@ function BecomeAMember() {
               className={inputClass}
               style={inputStyle}
             />
+            <FieldError fields={fieldErrors} name="major" />
           </div>
 
           {/* Year */}
@@ -288,6 +313,7 @@ function BecomeAMember() {
                 </option>
               ))}
             </select>
+            <FieldError fields={fieldErrors} name="year" />
           </div>
 
           {/* Section: Interests */}
@@ -360,12 +386,18 @@ function BecomeAMember() {
 
           {/* Submit */}
           <div className="pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            {error && (
+              <div className="mt-4">
+                <FormError error={error} />
+              </div>
+            )}
             <button
               type="submit"
-              className="btn btn-blue w-full mt-4"
+              disabled={submitting}
+              className="btn btn-blue w-full mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ padding: 14, borderRadius: 12, fontWeight: 600 }}
             >
-              Join GDG on Campus &mdash; MDC
+              {submitting ? "Submitting…" : <>Join GDG on Campus &mdash; MDC</>}
             </button>
             <p className="text-center text-xs text-white/30 mt-3">
               By joining, you agree to receive updates about events and opportunities.
@@ -390,6 +422,9 @@ function BecomeAMember() {
             <div className="flex items-center gap-5 text-base text-white/40">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
+              </Link>
+              <Link href="/events" className="hover:text-white transition-colors">
+                Events
               </Link>
               <Link href="/partner-with-us" className="hover:text-white transition-colors">
                 Partner

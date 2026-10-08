@@ -6,7 +6,7 @@ A modern, responsive website for the **Google Developer Group (GDG) on Campus** 
 
 **Created by [Andres Zubizarreta](https://github.com/andreszubi)
 
-> **Under development** — More features and pages are on the way, including a backend.
+**Back-end API:** [Google-Developers-Group-on-Campus-MDC-Back-End](https://github.com/Google-Developer-Group-MDC/Google-Developers-Group-on-Campus-MDC-Back-End) (Express + MongoDB)
 
 ---
 
@@ -22,7 +22,9 @@ This is the official landing and information site for the GDG on Campus chapter 
 - **By the Numbers** — Stats section (members, events, workshops, industry partners)
 - **What We Do** — Four pillars: Technical Workshops, Career Development, Community, Real-World Projects
 - **Testimonials** — Member quotes with roles and majors
-- **Dedicated pages** — `/become-a-member` and `/partner-with-us` for sign-up and partnership info
+- **Membership & partner forms** — `/become-a-member` and `/partner-with-us` submit to the back-end API with validation, error messages and spam protection
+- **Events** — `/events` page plus a Home section showing upcoming/past events, synced automatically from the chapter's [gdg.community.dev](https://gdg.community.dev/gdg-on-campus-miami-dade-college-miami-united-states/) page
+- **Admin dashboard** — `/admin` (officers only): review members and partner inquiries, update statuses, add notes, export CSV, and manage events
 - **Custom visuals** — SVG-based “neon” background inspired by Google Developer branding (globe, cloud, pin, etc.)
 - **Responsive layout** — Mobile-first with touch-friendly cards and readable typography
 - **SEO & sharing** — Metadata, Open Graph, and Twitter cards for better previews when shared
@@ -39,6 +41,7 @@ This is the official landing and information site for the GDG on Campus chapter 
 | Compiler      | [React Compiler](https://react.dev/learn/react-compiler) (Babel plugin) |
 | Linting       | ESLint with `eslint-config-next` |
 | Deployment    | [Netlify](https://www.netlify.com/) |
+| Back-end      | [Express + MongoDB API](https://github.com/Google-Developer-Group-MDC/Google-Developers-Group-on-Campus-MDC-Back-End) (separate repo) |
 
 The project uses the Next.js App Router, client components where needed (e.g. scroll/intersection behavior), and Tailwind for utility-first CSS. React Compiler is enabled for optimized React output.
 
@@ -55,12 +58,28 @@ The project uses the Next.js App Router, client components where needed (e.g. sc
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/google-developers-group-on-campus-mdc-front-end.git
-cd google-developers-group-on-campus-mdc-front-end
+git clone https://github.com/Google-Developer-Group-MDC/Google-Developers-Group-on-Campus-MDC-Front-End.git
+cd Google-Developers-Group-on-Campus-MDC-Front-End
 
 # Install dependencies
 npm install
 ```
+
+### Connect to the back-end
+
+The forms, events and admin dashboard talk to the [back-end API](https://github.com/Google-Developer-Group-MDC/Google-Developers-Group-on-Campus-MDC-Back-End). Copy the env template and point it at the API:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NEXT_PUBLIC_API_URL` | `http://127.0.0.1:4000` | Base URL of the back-end API (no trailing slash) |
+
+For local development, run the back-end (`npm install && npm run dev` in the back-end repo). It starts on port 4000 with an in-memory database, syncs events from gdg.community.dev, and prints a temporary admin login for `/admin`.
+
+On Netlify, set `NEXT_PUBLIC_API_URL` to the deployed API URL under **Site settings → Environment variables**, then redeploy.
 
 ### Development
 
@@ -98,12 +117,19 @@ src/
 │   ├── index.css           # Global styles (Tailwind)
 │   ├── become-a-member/    # Join / membership page
 │   ├── partner-with-us/    # Partnership page
+│   ├── events/             # Events page
+│   ├── admin/              # Admin dashboard (noindex)
 │   └── not-found.jsx       # 404 page
 ├── components/
-│   ├── Home.jsx            # Main landing content (hero, stats, pillars, testimonials)
+│   ├── Home.jsx            # Main landing content (hero, stats, pillars, events, testimonials)
 │   ├── NeonBackground.jsx  # Custom SVG background
-│   ├── BecomeAMember.jsx   # Membership page content
-│   └── PartnerWithUs.jsx   # Partner page content
+│   ├── BecomeAMember.jsx   # Membership form → POST /api/members
+│   ├── PartnerWithUs.jsx   # Partner form → POST /api/partners
+│   ├── Events.jsx          # Events page, event cards and Home teaser
+│   ├── Admin.jsx           # Admin login + dashboard
+│   └── FormHelpers.jsx     # Shared form error / honeypot components
+└── lib/
+    └── api.js              # fetch wrapper for the back-end API
 public/                     # Static assets (logos, images)
 ```
 
